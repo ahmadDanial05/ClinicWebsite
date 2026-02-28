@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistem Pengurusan Klinik</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>🏥 Sistem Pengurusan Klinik</h1>
+            <p class="subtitle">Dashboard Utama</p>
+            <div class="user-info" id="userInfo"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Statistics Dashboard -->
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2>Menu Utama</h2>
+            <div class="action-grid">
+                <a href="pendaftaran-pesakit.html" class="action-card">
+                    <div class="action-icon">📝</div>
+                    <h3>Pendaftaran Pesakit</h3>
+                    <p>Daftar pesakit baru</p>
+                </a>
+
+                <a href="senarai-pesakit.html" class="action-card">
+                    <div class="action-icon">👥</div>
+                    <h3>Senarai Pesakit</h3>
+                    <p>Lihat semua pesakit</p>
+                </a>
+
+                <a href="pengambilan-sampel.html" class="action-card">
+                    <div class="action-icon">💉</div>
+                    <h3>Pengambilan Sampel</h3>
+                    <p>Rekod sampel darah</p>
+                </a>
+
+                <a href="jenis-sampel.html" class="action-card">
+                    <div class="action-icon">🧪</div>
+                    <h3>Jenis Sampel</h3>
+                    <p>Urus jenis sampel</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="card">
+            <h2 class="card-header">Aktiviti Terkini</h2>
+            <div id="recentActivities"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/init-demo-data.js"></script>
+    
+    <!-- Demo Data Loader (Hidden after initialization) -->
+    <script>
+        if (localStorage.getItem('demoDataInitialized') !== 'true') {
+            const banner = document.createElement('div');
+            banner.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+                z-index: 9999;
+                max-width: 300px;
+            `;
+            banner.innerHTML = `
+                <h4 style="margin: 0 0 0.5rem 0;">📊 Data Demo</h4>
+                <p style="margin: 0 0 1rem 0; font-size: 0.9rem;">
+                    Sistem kosong. Muat data demo untuk mula?
+                </p>
+                <button onclick="initializeDemoData(); this.parentElement.remove();" 
+                        style="background: white; color: #667eea; border: none; 
+                               padding: 0.75rem 1.5rem; border-radius: 6px; 
+                               font-weight: 600; cursor: pointer; width: 100%;">
+                    ✨ Muat Data Demo
+                </button>
+            `;
+            document.body.appendChild(banner);
+        }
+    </script>
+</body>
+</html>

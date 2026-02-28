@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Label Compact - 7.62cm x 5.08cm</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dimensions-box {
+            background: #e0f2fe;
+            border: 2px solid #0284c7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .dimensions-box h3 {
+            color: #0284c7;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dimensions-box p {
+            color: #075985;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions ul {
+            color: #856404;
+            padding-left: 1.5rem;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .preview-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .preview-container h2 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .labels-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        /* COMPACT LABEL STYLES - 7.62cm x 5.08cm */
+        .label-item {
+            border: 2px solid #000;
+            width: 7.62cm;
+            height: 5.08cm;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            box-sizing: border-box;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .label-header {
+            text-align: center;
+            background: #f8f9fa;
+            border-bottom: 2px solid #000;
+            padding: 4px 6px;
+        }
+        
+        .label-header .logo {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .label-header h3 {
+            margin: 0;
+            font-size: 13px;
+            font-weight: bold;
+            color: #2563eb;
+            line-height: 1.1;
+        }
+        
+        .label-header p {
+            margin: 1px 0 0 0;
+            font-size: 8px;
+            color: #666;
+            line-height: 1;
+        }
+        
+        .label-body {
+            display: flex;
+            padding: 6px 8px;
+            gap: 6px;
+            height: calc(100% - 65px);
+        }
+        
+        .label-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            font-size: 10px;
+            line-height: 1.2;
+        }
+        
+        .label-info-row {
+            display: flex;
+            margin-bottom: 1px;
+        }
+        
+        .label-info-row strong {
+            color: #000;
+            font-weight: bold;
+            min-width: 45px;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+        
+        .label-info-row span {
+            color: #000;
+            font-size: 10px;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+        
+        .qr-code-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            flex-shrink: 0;
+        }
+        
+        .qr-code-container canvas,
+        .qr-code-container img {
+            max-width: 55px !important;
+            max-height: 55px !important;
+            width: 55px !important;
+            height: 55px !important;
+        }
+        
+        .label-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3px 6px;
+            background: #f8f9fa;
+            border-top: 1px solid #000;
+            font-size: 7px;
+            text-align: center;
+            color: #666;
+            line-height: 1;
+        }
+        
+        .print-button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            display: block;
+            margin: 2rem auto;
+        }
+        
+        .print-button:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .header,
+            .instructions,
+            .print-button,
+            .dimensions-box,
+            .preview-container h2 {
+                display: none !important;
+            }
+            
+            .preview-container {
+                padding: 0;
+                box-shadow: none;
+            }
+            
+            .labels-grid {
+                gap: 0;
+            }
+            
+            .label-item {
+                page-break-after: always;
+                border: 1px solid #000;
+                box-shadow: none;
+                margin: 0;
+            }
+            
+            .label-item:last-child {
+                page-break-after: auto;
+            }
+            
+            @page {
+                size: 7.62cm 5.08cm;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏷️ Demo Label Compact</h1>
+            <p>Optimized untuk 7.62cm x 5.08cm</p>
+        </div>
+        
+        <div class="dimensions-box">
+            <h3>📏 Saiz Label</h3>
+            <p>7.62cm (W) × 5.08cm (H)</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">3 inches × 2 inches</p>
+        </div>
+        
+        <div class="instructions">
+            <h3>📝 Cara Cetak:</h3>
+            <ul>
+                <li><strong>Paper size:</strong> Custom → 7.62cm x 5.08cm</li>
+                <li><strong>Margins:</strong> None</li>
+                <li><strong>Scale:</strong> 100%</li>
+                <li><strong>Background graphics:</strong> ✅ ON</li>
+                <li><strong>Orientation:</strong> Landscape</li>
+            </ul>
+        </div>
+        
+        <div class="preview-container">
+            <h2>Pratonton Label:</h2>
+            <div class="labels-grid" id="labelsContainer"></div>
+        </div>
+        
+        <button class="print-button" onclick="window.print()">
+            🖨️ Cetak Label
+        </button>
+    </div>
+    
+    <script>
+        // Sample patient data
+        const samplePatients = [
+            {
+                id: 1,
+                nama: 'Ahmad bin Abdullah',
+                no_kad: '850123-01-1234',
+                tarikh_lahir: '1985-01-23',
+                jantina: 'Lelaki'
+            },
+            {
+                id: 2,
+                nama: 'Siti Nurhaliza binti Hassan',
+                no_kad: '920515-05-6789',
+                tarikh_lahir: '1992-05-15',
+                jantina: 'Perempuan'
+            }
+        ];
+        
+        // Generate labels on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            generateLabels();
+        });
+        
+        function generateLabels() {
+            const container = document.getElementById('labelsContainer');
+            container.innerHTML = '';
+            
+            samplePatients.forEach((patient, index) => {
+                const labelHtml = createLabel(patient, index);
+                container.innerHTML += labelHtml;
+            });
+            
+            // Generate QR codes
+            samplePatients.forEach((patient, index) => {
+                setTimeout(() => generateQRCode(patient, `qr-${index}`), 100);
+            });
+        }
+        
+        function createLabel(patient, index) {
+            const patientId = `P${String(patient.id).padStart(5, '0')}`;
+            const currentDate = formatDate(new Date());
+            const birthDate = formatDate(new Date(patient.tarikh_lahir));
+            
+            return `
+                <div class="label-item">
+                    <div class="label-header">
+                        <div class="logo">🏥</div>
+                        <h3>KLINIK KESIHATAN</h3>
+                        <p>Label Pengenalan Pesakit</p>
+                    </div>
+                    
+                    <div class="label-body">
+                        <div class="label-info">
+                            <div class="label-info-row">
+                                <strong>Nama:</strong>
+                                <span>${patient.nama}</span>
+                            </div>
+                            <div class="label-info-row">
+                                <strong>No. KP:</strong>
+                                <span>${patient.no_kad}</span>
+                            </div>
+                            <div class="label-info-row">
+                                <strong>T.Lahir:</strong>
+                                <span>${birthDate}</span>
+                            </div>
+                            <div class="label-info-row">
+                                <strong>Jantina:</strong>
+                                <span>${patient.jantina}</span>
+                            </div>
+                            <div class="label-info-row">
+                                <strong>ID:</strong>
+                                <span>${patientId}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-code-container">
+                            <div id="qr-${index}"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="label-footer">
+                        Dicetak: ${currentDate}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function generateQRCode(patient, elementId) {
+            const qrElement = document.getElementById(elementId);
+            if (!qrElement) return;
+            
+            const patientId = `P${String(patient.id).padStart(5, '0')}`;
+            const qrData = JSON.stringify({
+                id: patientId,
+                nama: patient.nama,
+                no_kad: patient.no_kad,
+                type: 'patient'
+            });
+            
+            try {
+                new QRCode(qrElement, {
+                    text: qrData,
+                    width: 55,
+                    height: 55,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.L
+                });
+            } catch (error) {
+                console.error('QR Code error:', error);
+            }
+        }
+        
+        function formatDate(date) {
+            const d = date.getDate();
+            const m = date.getMonth() + 1;
+            const y = date.getFullYear();
+            return `${d}/${m}/${y}`;
+        }
+    </script>
+</body>
+</html>

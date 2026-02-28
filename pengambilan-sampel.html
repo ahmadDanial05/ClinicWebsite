@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengambilan Sampel - Sistem Pengurusan Klinik</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>💉 Pengambilan Sampel</h1>
+            <p class="subtitle">Rekod pengambilan sampel darah</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">Dashboard</a> / <span>Pengambilan Sampel</span>
+        </nav>
+
+        <!-- Form Pengambilan Sampel -->
+        <div class="card">
+            <h2 class="card-header">Pengambilan Sampel Baru</h2>
+            
+            <form id="formSampel">
+                <div class="form-group patient-select">
+                    <label for="selectPesakit">Pilih Pesakit *</label>
+                    <select id="selectPesakit" required>
+                        <option value="">-- Pilih Pesakit --</option>
+                    </select>
+                </div>
+                
+                <div id="maklumatPesakit" style="display: none;" class="patient-info-box">
+                    <h3>Maklumat Pesakit</h3>
+                    <div class="info-grid">
+                        <div><strong>Nama:</strong> <span id="infoPesakitNama"></span></div>
+                        <div><strong>No. KP:</strong> <span id="infoPesakitKP"></span></div>
+                        <div><strong>ID:</strong> <span id="infoPesakitID"></span></div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="jenisSampelSelect">Jenis Sampel *</label>
+                        <select id="jenisSampelSelect" required>
+                            <option value="">-- Pilih Jenis Sampel --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="namaPegawai">Nama Pegawai *</label>
+                        <input type="text" id="namaPegawai" required placeholder="Nama pegawai yang ambil sampel">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notaSampel">Nota / Remarks</label>
+                    <textarea id="notaSampel" placeholder="Catatan tambahan (jika ada)"></textarea>
+                </div>
+
+                <div class="btn-actions">
+                    <button type="submit" class="btn btn-success">✓ Rekod Pengambilan Sampel</button>
+                    <a href="index.html" class="btn btn-outline">← Kembali</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Rekod Pengambilan Sampel -->
+        <div class="card">
+            <h2 class="card-header">Rekod Pengambilan Sampel</h2>
+            <div id="senaraiSampel"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/pengambilan-sampel.js"></script>
+</body>
+</html>

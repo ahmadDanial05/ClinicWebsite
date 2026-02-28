@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senarai Pesakit - Sistem Pengurusan Klinik</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>👥 Senarai Pesakit</h1>
+            <p class="subtitle">Semua pesakit yang telah didaftarkan</p>
+            <div class="user-info" id="userInfo"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">Dashboard</a> / <span>Senarai Pesakit</span>
+        </nav>
+
+        <div class="card">
+            <div class="card-header-flex">
+                <h2 class="card-header">Senarai Semua Pesakit</h2>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h3 style="margin-bottom: 1rem; color: var(--dark-color);">🔍 Carian & Penapis</h3>
+                <div class="filter-grid">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="searchInput">Cari Pesakit</label>
+                        <input type="text" id="searchInput" placeholder="Nama, No. KP, Alamat, Telefon..." onkeyup="searchPatient()">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="filterStartDate">Tarikh Mula</label>
+                        <input type="date" id="filterStartDate">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="filterEndDate">Tarikh Akhir</label>
+                        <input type="date" id="filterEndDate">
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>&nbsp;</label>
+                        <button onclick="resetFilters()" class="btn btn-secondary" style="width: 100%;">
+                            🔄 Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <p id="resultCount" style="color: var(--text-secondary); font-size: 0.9rem;"></p>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <table id="tablePesakit">
+                    <thead>
+                        <tr>
+                            <th>ID Pesakit</th>
+                            <th>Nama</th>
+                            <th>No. Kad Pengenalan</th>
+                            <th>Alamat</th>
+                            <th>No. Telefon</th>
+                            <th>Tarikh Daftar</th>
+                            <th>Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyPesakit">
+                        <tr>
+                            <td colspan="7" class="loading">⏳ Memuatkan data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="btn-actions">
+            <a href="pendaftaran-pesakit.html" class="btn btn-primary">+ Daftar Pesakit Baru</a>
+            <button onclick="exportToCSV()" class="btn btn-success">📊 Export CSV</button>
+            <a href="index.html" class="btn btn-outline">← Kembali</a>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/senarai-pesakit.js"></script>
+</body>
+</html>

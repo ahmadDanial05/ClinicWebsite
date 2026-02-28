@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenis Sampel - Sistem Pengurusan Klinik</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🧪 Pengurusan Jenis Sampel</h1>
+            <p class="subtitle">Urus jenis-jenis sampel</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">Dashboard</a> / <span>Jenis Sampel</span>
+        </nav>
+
+        <!-- Form Tambah Jenis Sampel -->
+        <div class="card">
+            <h2 class="card-header">Tambah Jenis Sampel Baru</h2>
+            <form id="formJenisSampel">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="namaSampel">Nama Jenis Sampel *</label>
+                        <input type="text" id="namaSampel" required placeholder="Contoh: Darah Penuh, Serum, Plasma">
+                    </div>
+                    <button type="submit" class="btn btn-primary">+ Tambah Jenis Sampel</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Senarai Jenis Sampel -->
+        <div class="card">
+            <h2 class="card-header">Senarai Jenis Sampel</h2>
+            <div id="senaraiJenisSampel"></div>
+        </div>
+
+        <div class="btn-actions">
+            <a href="index.html" class="btn btn-outline">← Kembali</a>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/jenis-sampel.js"></script>
+</body>
+</html>

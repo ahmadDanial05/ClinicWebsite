@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Label Pesakit - Sistem Pengurusan Klinik</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* Print Styles - SATU LABEL DI TENGAH A4 LANDSCAPE */
+        @media print {
+            body {
+                background: white !important;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .label-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .label-item {
+                border: 2px solid #000;
+                width: 7.62cm;
+                height: 5.08cm;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                background: white;
+                overflow: hidden;
+                page-break-after: always;
+            }
+            
+            .label-item:last-child {
+                page-break-after: auto;
+            }
+            
+            /* A4 Landscape dengan label di tengah */
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
+        
+        /* Screen Preview Styles */
+        .label-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+        
+        .label-item {
+            border: 2px solid #000;
+            width: 7.62cm;
+            height: 5.08cm;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            box-sizing: border-box;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        /* Compact Header */
+        .label-header {
+            text-align: center;
+            background: #f8f9fa;
+            border-bottom: 2px solid #000;
+            padding: 4px 6px;
+        }
+        
+        .label-header .logo {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .label-header h3 {
+            margin: 0;
+            font-size: 13px;
+            font-weight: bold;
+            color: #2563eb;
+            line-height: 1.1;
+        }
+        
+        .label-header p {
+            margin: 1px 0 0 0;
+            font-size: 8px;
+            color: #666;
+            line-height: 1;
+        }
+        
+        /* Compact Body */
+        .label-body {
+            display: flex;
+            padding: 6px 8px;
+            gap: 6px;
+            height: calc(100% - 65px);
+        }
+        
+        .label-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            font-size: 10px;
+            line-height: 1.2;
+        }
+        
+        .label-info-row {
+            display: flex;
+            margin-bottom: 1px;
+        }
+        
+        .label-info-row strong {
+            color: #000;
+            font-weight: bold;
+            min-width: 45px;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+        
+        .label-info-row span {
+            color: #000;
+            font-size: 10px;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+        
+        /* QR Code - Smaller */
+        .qr-code-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            flex-shrink: 0;
+        }
+        
+        .qr-code-container canvas,
+        .qr-code-container img {
+            max-width: 55px !important;
+            max-height: 55px !important;
+            width: 55px !important;
+            height: 55px !important;
+        }
+        
+        /* Compact Footer */
+        .label-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3px 6px;
+            background: #f8f9fa;
+            border-top: 1px solid #000;
+            font-size: 7px;
+            text-align: center;
+            color: #666;
+            line-height: 1;
+        }
+        
+        /* Instructions Box */
+        .print-instructions {
+            background: #d1ecf1;
+            border: 1px solid #0c5460;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .print-instructions h4 {
+            margin: 0 0 0.5rem 0;
+            color: #0c5460;
+            font-size: 1rem;
+        }
+        
+        .print-instructions ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            color: #0c5460;
+            font-size: 0.9rem;
+        }
+        
+        .print-instructions li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .print-instructions strong {
+            color: #000;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="no-print">
+        <div class="container">
+            <h1>🏷️ Cetak Label Pesakit</h1>
+            <p class="subtitle">Label pengenalan pesakit (7.62cm x 5.08cm)</p>
+            <div class="user-info" id="userInfo"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="breadcrumb no-print">
+            <a href="index.html">Dashboard</a> / 
+            <a href="senarai-pesakit.html">Senarai Pesakit</a> / 
+            <span>Cetak Label</span>
+        </nav>
+
+        <!-- Print Instructions -->
+        <div class="print-instructions no-print">
+            <h4>📋 Arahan Cetak Label (SATU LABEL PER MUKA SURAT A4):</h4>
+            <ul>
+                <li>✅ Saiz label: <strong>7.62cm x 5.08cm</strong> (akan muncul di tengah kertas A4)</li>
+                <li>✅ Tetapan printer: <strong>A4 Landscape</strong></li>
+                <li>✅ Set <strong>Margins = Default</strong> atau <strong>None</strong></li>
+                <li>✅ Set <strong>Scale = 100%</strong></li>
+                <li>✅ Enable <strong>"Background graphics"</strong> dalam print settings</li>
+                <li>✅ Setiap label akan print di tengah-tengah kertas A4 secara landscape</li>
+            </ul>
+        </div>
+
+        <!-- Label Selection -->
+        <div class="card no-print">
+            <h2 class="card-header">Pilih Pesakit untuk Cetak Label</h2>
+            
+            <div class="form-group">
+                <label for="selectPatient">Pilih Pesakit</label>
+                <select id="selectPatient">
+                    <option value="">-- Pilih Pesakit --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="labelQuantity">Bilangan Label (setiap label = 1 muka surat A4)</label>
+                <input type="number" id="labelQuantity" value="1" min="1" max="10">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="includeQR" checked>
+                    Sertakan QR Code
+                </label>
+            </div>
+
+            <div class="btn-actions">
+                <button onclick="printLabels()" class="btn btn-success">🖨️ Cetak Label</button>
+                <button onclick="generatePDF()" class="btn btn-primary">📄 Download PDF</button>
+                <a href="senarai-pesakit.html" class="btn btn-outline">← Kembali</a>
+            </div>
+        </div>
+
+        <!-- Label Preview -->
+        <div class="card">
+            <div class="card-header-flex no-print">
+                <h2 class="card-header">Pratonton Label (7.62cm x 5.08cm di tengah A4)</h2>
+            </div>
+            
+            <div id="labelPreview" class="label-container">
+                <div class="no-data">Pilih pesakit untuk melihat pratonton label</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/cetak-label.js"></script>
+</body>
+</html>

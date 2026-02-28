@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Pesakit - Sistem Pengurusan Klinik</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📝 Pendaftaran Pesakit</h1>
+            <p class="subtitle">Daftar pesakit baru</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="breadcrumb">
+            <a href="index.html">Dashboard</a> / <span>Pendaftaran Pesakit</span>
+        </nav>
+
+        <div class="card">
+            <h2 class="card-header">Pendaftaran Pesakit Baru</h2>
+            <div id="alertContainer"></div>
+            
+            <form id="formPendaftaran">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nama">Nama Penuh *</label>
+                        <input type="text" id="nama" required placeholder="Masukkan nama penuh pesakit">
+                    </div>
+                    <div class="form-group">
+                        <label for="noKad">No. Kad Pengenalan *</label>
+                        <input type="text" id="noKad" required placeholder="XXXXXX-XX-XXXX" 
+                               pattern="[0-9]{6}-[0-9]{2}-[0-9]{4}">
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tarikhLahir">Tarikh Lahir</label>
+                        <input type="date" id="tarikhLahir">
+                    </div>
+                    <div class="form-group">
+                        <label for="jantina">Jantina</label>
+                        <select id="jantina">
+                            <option value="">-- Pilih --</option>
+                            <option value="Lelaki">Lelaki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="alamat">Alamat *</label>
+                    <textarea id="alamat" required placeholder="Masukkan alamat lengkap"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="noTelefon">No. Telefon</label>
+                    <input type="tel" id="noTelefon" placeholder="01X-XXXXXXX">
+                </div>
+
+                <div class="btn-actions">
+                    <button type="submit" class="btn btn-primary">✓ Daftar Pesakit</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">↺ Reset Form</button>
+                    <a href="index.html" class="btn btn-outline">← Kembali</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/pendaftaran-pesakit.js"></script>
+</body>
+</html>
